@@ -1,4 +1,5 @@
 using Mishbetzet;
+using Mishbetzet.Turns;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -28,15 +29,19 @@ public class GameManager : MonoBehaviour
     {
 
         //Create the tilemap
-        GeneratePlyaers();
+        GeneratePlayers();
         GenerateMap();
         GeneratePawnStart(3, 5);
         Core.Run();
 
-
     }
 
-    void GeneratePlyaers()
+    private void Update()
+    {
+        Core.Update();
+    }
+
+    void GeneratePlayers()
     {
         blackTeam = new();
         whiteTeam = new();
