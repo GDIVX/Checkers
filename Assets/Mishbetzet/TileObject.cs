@@ -31,7 +31,7 @@ namespace Mishbetzet
 
         //should be called if a game object steps on a tile without finishing his move function,
         //meaning he did not land on the tile, just passed over it.
-        public event Action<TileObject> OnPassOver;
+        public event Action<Point> OnPassOver;
 
         #region Senquancing
         /// <summary>
@@ -67,7 +67,19 @@ namespace Mishbetzet
 
             if (tile == null) return;
 
-            SetTile(tile);
+            //check if tile or gameObject on the tile that you want to move to blocks movement
+
+            int remainingSteps = RemainingSteps;
+
+            while (TryStep(position))
+            {
+                remainingSteps--;
+                if (remainingSteps <= 0)
+                {
+                    break;
+
+                }
+            }
         }
 
         /// <summary>
@@ -79,20 +91,103 @@ namespace Mishbetzet
             //Remove old tile if needed
             if (Tile != null)
             {
-                Tile.gameObject = null;
+                Tile.tileObject = null;
                 Actor?.RemoveTile(Tile);
             }
 
             //Set new tile
             Actor?.AddTile(tile);
             Tile = tile;
-            tile.gameObject = this;
+            tile.tileObject = this;
         }
 
 
-        //onstep should contain one tile movement in any direction
-        //based on the move logic for each game object. for example moves in stepdirection North (N) so y--
-        public abstract void Step(Point direction);
+        /// <summary>
+        /// Tries to step in a direction
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
+        public virtual bool TryStep(Point direction)
+        {
+            Point currentPoint = Tile.Position;
+            Point pos = new Point();
+            pos = Tile.Position - direction;
+
+            currentPoint = Step(currentPoint, pos);
+
+            if (currentPoint.Equals(Tile.Position))
+            {
+                return false;
+            }
+
+            Tile? newTile = Core.Main.Tilemap[currentPoint.X, currentPoint.Y];
+
+            if (newTile == null)
+            {
+                return false;
+            }
+
+            TileObject? go = Tile.tileObject;
+
+            //check if tile or game object iblockmovement
+            if (newTile is IBlockMovementMarker || go is IBlockMovementMarker)
+            {
+                return false;
+            }
+
+            //check if tile has game object
+            if (go != null)
+            {
+                //check if game object is from the same actor
+                if (go.Actor == this.Actor)
+                {
+                    return false;
+                }
+            }
+
+            SetTile(newTile);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Moves pointToMove one step closer to 0,0 based on pos
+        /// </summary>
+        /// <param name="pointToMove"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        private Point Step(Point pointToMove, Point pos)
+        {
+            switch (pos.X)
+            {
+                case < 0 when pos.Y == 0:
+                    pointToMove += Point.East;
+                    break;
+                case < 0 when pos.Y < 0:
+                    pointToMove += Point.NorthEast;
+                    break;
+                case 0 when pos.Y < 0:
+                    pointToMove += Point.North;
+                    break;
+                case > 0 when pos.Y < 0:
+                    pointToMove += Point.NorthWest;
+                    break;
+                case > 0 when pos.Y == 0:
+                    pointToMove += Point.West;
+                    break;
+                case > 0 when pos.Y > 0:
+                    pointToMove += Point.SouthWest;
+                    break;
+                case 0 when pos.Y > 0:
+                    pointToMove += Point.South;
+                    break;
+                case < 0 when pos.Y > 0:
+                    pointToMove += Point.SouthEast;
+                    break;
+            }
+            OnPassOver?.Invoke(pointToMove);
+            return pointToMove;
+        }
 
         object ICloneable.Clone()
         {

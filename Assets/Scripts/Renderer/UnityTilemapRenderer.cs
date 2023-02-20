@@ -35,7 +35,7 @@ public class UnityTilemapRenderer : IRenderer
         if (tile == null) return;
 
         //Get the tile object
-        TileObject tileObject = tile.gameObject;
+        TileObject tileObject = tile.tileObject;
         if (tileObject == null) return;
 
         //Get the tile object prefab

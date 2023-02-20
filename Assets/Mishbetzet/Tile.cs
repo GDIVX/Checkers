@@ -9,7 +9,7 @@ namespace Mishbetzet
 {
     public abstract class Tile
     {
-        public TileObject gameObject { get; set; }
+        public TileObject tileObject { get; set; }
         public Actor? Actor { get; set; }
         public Point Position { get; set; }
 
@@ -24,9 +24,15 @@ namespace Mishbetzet
 
         #endregion
 
+        public void SetGameObject(TileObject newTileObject)
+        {
+            this.tileObject = newTileObject;
+            newTileObject.SetTile(this);
+        }
+
         public override string ToString()
         {
-            return $"{Position.X}, {Position.Y}";
+            return $"{Position.X}, {Position.Y}, object: {tileObject}";
         }
 
 

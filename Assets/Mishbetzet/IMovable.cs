@@ -9,10 +9,23 @@ namespace Mishbetzet
 {
     internal interface IMovable
     {
-        //bool isMoving { get; set; } //a way to check if the game object is stationary?
 
-        public abstract void Step(Point direction);
+        public abstract bool TryStep(Point direction);
 
-        public abstract void Move(Point position);
+        public void Move(Point position)
+        {
+            int steps = 0;
+            while (TryStep(position))
+            {
+                if (steps < 20)
+                {
+                    steps++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
     }
 }
