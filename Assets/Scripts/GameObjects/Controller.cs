@@ -39,7 +39,7 @@ public class Controller : MonoBehaviour
             selected = null;
         }
 
-
+        print(selected.ToString());
 
     }
 }
