@@ -11,6 +11,7 @@ namespace Mishbetzet
     {
         Tile _currentTile;
         Actor _actor;
+        string _name;
         /// <summary>
         /// The distance the game object is allowed to move per turn. 
         /// </summary>
@@ -22,6 +23,8 @@ namespace Mishbetzet
         public Actor? Actor { get => _actor; internal set => _actor = value; }
 
         public Point RednerablePoint => Tile.Position;
+
+        public string Name { get => _name; set => _name = value; }
 
         public event Action OnStep;
 

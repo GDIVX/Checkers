@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -8,9 +9,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RendererData", menuName = "ScriptableObjects/RendererData", order = 1)]
 public class RendererData : ScriptableObject
 {
+    [SerializeField] Vector2 offset;
     [SerializeField] List<TileRenderDefinition> definitions;
 
-    public List<TileRenderDefinition> Definitions => definitions;
+    public Vector2 Offset { get => offset; set => offset = value; }
+
+    public GameObject GetPrefab(string name)
+    {
+        return definitions.First(def => def.Name == name).Prefab;
+    }
 }
 
 [System.Serializable]

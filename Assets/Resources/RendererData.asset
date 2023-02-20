@@ -17,3 +17,11 @@ MonoBehaviour:
     _prefab: {fileID: 2511952277480066899, guid: ad78fa9d7b6007242a4b357e1bab411f, type: 3}
   - _name: WhiteTile
     _prefab: {fileID: 2511952277480066899, guid: 797ec0bfb6d81f342929d588552f31ac, type: 3}
+  - _name: WhiteMan
+    _prefab: {fileID: 3408813808023087681, guid: eed47d5e1f419e346811993697d9869c, type: 3}
+  - _name: BlackMan
+    _prefab: {fileID: 3408813808023087681, guid: 8ad7c580a641e184696bb0340f6c4def, type: 3}
+  - _name: WhiteKing
+    _prefab: {fileID: 8440699615698908737, guid: f18cd415726b58545bccc5e9433f8b79, type: 3}
+  - _name: BlackKing
+    _prefab: {fileID: 1662164775935495489, guid: ed515a7d195625d4aa99fb1f14bcaebc, type: 3}

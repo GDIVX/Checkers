@@ -5,7 +5,7 @@ using UnityEngine;
 
 public sealed class WhiteTile : Tile
 {
-    public WhiteTile(Point position) : base(position)
+    public WhiteTile(Point position , string name) : base(position , name)
     {
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public sealed class BlackTile : Tile
 {
-    public BlackTile(Point position) : base(position)
+    public BlackTile(Point position, string name) : base(position , name)
     {
     }
 

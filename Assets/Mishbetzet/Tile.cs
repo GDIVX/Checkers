@@ -17,7 +17,7 @@ namespace Mishbetzet
 
 
         #region Constructors
-        public Tile(Point position)
+        public Tile(Point position , string name)
         {
             Position = position;
         }
