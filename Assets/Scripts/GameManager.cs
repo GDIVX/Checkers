@@ -1,7 +1,4 @@
 using Mishbetzet;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -33,7 +30,7 @@ public class GameManager : MonoBehaviour
         //Create the tilemap
         GeneratePlyaers();
         GenerateMap();
-        GeneratePawnStart(2,6);
+        GeneratePawnStart(3, 5);
         Core.Run();
 
 
@@ -77,14 +74,29 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="topBorder"></param>
     /// <param name="BotBorder">the place you think :)</param>
-    void GeneratePawnStart(int topBorder,int BotBorder)
+    void GeneratePawnStart(int topBorder, int BotBorder)
     {
-        for(int i = 0;i < topBorder; i++)
+        for (int i = 0; i < topBorder; i++)
         {
-            for (int j = 0;j < Core.Tilemap.Width; j++)
+            for (int j = 0; j < Core.Tilemap.Width; j++)
             {
-                Tile tile = Core.Tilemap[i,j];
-                Core.CreateGameObject<WhiteMan>(whiteTeam, tile);
+                if (i % 2 == 0)
+                {
+                    if (j % 2 == 1)
+                    {
+                        Tile tile = Core.Tilemap[i, j];
+                        Core.CreateGameObject<WhiteMan>(whiteTeam, tile);
+
+                    }
+                }
+                else
+                {
+                    if (j % 2 == 0)
+                    {
+                        Tile tile = Core.Tilemap[i, j];
+                        Core.CreateGameObject<WhiteMan>(whiteTeam, tile);
+                    }
+                }
             }
         }
 
@@ -92,8 +104,23 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < Core.Tilemap.Width; j++)
             {
-                Tile tile = Core.Tilemap[i, j];
-                Core.CreateGameObject<BlackMan>(blackTeam, tile);
+                if (i % 2 == 0)
+                {
+                    if (j % 2 == 1)
+                    {
+                        Tile tile = Core.Tilemap[i, j];
+                        Core.CreateGameObject<BlackMan>(blackTeam, tile);
+
+                    }
+                }
+                else
+                {
+                    if (j % 2 == 0)
+                    {
+                        Tile tile = Core.Tilemap[i, j];
+                        Core.CreateGameObject<BlackMan>(blackTeam, tile);
+                    }
+                }
             }
         }
     }
