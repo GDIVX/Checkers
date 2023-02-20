@@ -9,9 +9,11 @@ namespace Mishbetzet
 {
     public abstract class Tile
     {
-        public GameObject gameObject { get; set; }
+        public TileObject gameObject { get; set; }
         public Actor? Actor { get; set; }
         public Point Position { get; set; }
+
+        public abstract string Name { get; }
 
 
         #region Constructors
@@ -27,9 +29,6 @@ namespace Mishbetzet
             return $"{Position.X}, {Position.Y}";
         }
 
-        public void GetLook()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

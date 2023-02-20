@@ -9,7 +9,7 @@ namespace Mishbetzet
     public class Actor
     {
         internal List<Tile> tiles;
-        internal List<GameObject> gameObjects;
+        internal List<TileObject> gameObjects;
 
         internal Actor()
         {
@@ -46,7 +46,7 @@ namespace Mishbetzet
         /// Add a game object to the actor
         /// </summary>
         /// <param name="gameObject"></param>
-        public void AddGameObject(GameObject gameObject)
+        public void AddGameObject(TileObject gameObject)
         {
             gameObject.Actor = this;
             gameObjects.Add(gameObject);
@@ -58,7 +58,7 @@ namespace Mishbetzet
         /// Remove a game object from the actor
         /// </summary>
         /// <param name="gameObject"></param>
-        public void RemoveGameObject(GameObject gameObject)
+        public void RemoveGameObject(TileObject gameObject)
         {
             gameObject.Actor = null;
             gameObjects.Remove(gameObject);

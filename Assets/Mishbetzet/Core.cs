@@ -40,7 +40,7 @@ namespace Mishbetzet
         ReadlineCommandHandler commandHandler;
         bool _isRunning = false;
         private List<Actor> _actorsInPlay = new();
-        private List<GameObject> _gameObjects = new();
+        private List<TileObject> _gameObjects = new();
 
         public Core()
         {
@@ -84,7 +84,7 @@ namespace Mishbetzet
             Tilemap.AddTile(tile);
         }
 
-        public GameObject CreateGameObject<T>(Actor owner, Tile tile) where T : GameObject
+        public TileObject CreateGameObject<T>(Actor owner, Tile tile) where T : TileObject
         {
 
             #region NULL_CHECKS
@@ -98,7 +98,7 @@ namespace Mishbetzet
                 throw new ArgumentNullException(nameof(tile));
             }
 
-            var gameObject = Activator.CreateInstance(typeof(T)) as GameObject;
+            var gameObject = Activator.CreateInstance(typeof(T)) as TileObject;
 
             if (gameObject == null)
             {

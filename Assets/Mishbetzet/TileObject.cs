@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mishbetzet
 {
-    public abstract class GameObject : IMovable, ICloneable
+    public abstract class TileObject : IMovable, ICloneable
     {
         Tile _currentTile;
         Actor _actor;
@@ -28,7 +28,7 @@ namespace Mishbetzet
 
         //should be called if a game object steps on a tile without finishing his move function,
         //meaning he did not land on the tile, just passed over it.
-        public event Action<GameObject> OnPassOver;
+        public event Action<TileObject> OnPassOver;
 
         #region Senquancing
         /// <summary>
