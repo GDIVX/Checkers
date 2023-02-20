@@ -72,6 +72,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="topBorder"></param>
+    /// <param name="BotBorder">the place you think :)</param>
     void GeneratePawnStart(int topBorder,int BotBorder)
     {
         for(int i = 0;i < topBorder; i++)
