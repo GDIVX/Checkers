@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 
 
     Core Core => Core.Main;
+    Mishbetzet.Actor blackTeam;
+    Mishbetzet.Actor whiteTeam;
+
 
     private void Awake()
     {
@@ -28,10 +31,18 @@ public class GameManager : MonoBehaviour
     {
 
         //Create the tilemap
+        GeneratePlyaers();
         GenerateMap();
+        GeneratePawnStart(2,6);
         Core.Run();
 
 
+    }
+
+    void GeneratePlyaers()
+    {
+        blackTeam = new();
+        whiteTeam = new();
     }
 
     private void GenerateMap()
@@ -60,4 +71,26 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    void GeneratePawnStart(int topBorder,int BotBorder)
+    {
+        for(int i = 0;i < topBorder; i++)
+        {
+            for (int j = 0;j < Core.Tilemap.Width; j++)
+            {
+                Tile tile = Core.Tilemap[i,j];
+                Core.CreateGameObject<WhiteMan>(whiteTeam, tile);
+            }
+        }
+
+        for (int i = BotBorder; i < Core.Tilemap.Height; i++)
+        {
+            for (int j = 0; j < Core.Tilemap.Width; j++)
+            {
+                Tile tile = Core.Tilemap[i, j];
+                Core.CreateGameObject<BlackMan>(blackTeam, tile);
+            }
+        }
+    }
+
 }
