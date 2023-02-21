@@ -65,6 +65,6 @@ public class Controller : MonoBehaviour
         }
 
 
-        selected = tileObject;
+        selected = tileObject; 
     }
 }
