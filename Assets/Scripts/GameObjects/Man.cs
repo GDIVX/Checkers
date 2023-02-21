@@ -40,6 +40,8 @@ namespace Assets.Scripts.GameObjects
             if (IsMovingRight && position.X > Tile.Position.X) return false;
             if (!IsMovingRight && position.X < Tile.Position.X) return false;
 
+            if(MathF.Abs(position.X-Tile.Position.X) > 1) return false;
+
             //TODO make sure men can only move diagonally
             return base.TryStep(position);
         }
