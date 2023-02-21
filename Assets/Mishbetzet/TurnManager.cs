@@ -11,6 +11,8 @@ namespace Mishbetzet.Turns
         List<ITurnTracker> _turnOrder = new();
         int index = 0;
 
+        public ITurnTracker CurrentTurn => _turnOrder[index];
+
         /// <summary>
         /// Add an ITurnTracker to the turn order
         /// </summary>
@@ -64,6 +66,8 @@ namespace Mishbetzet.Turns
             {
                 index = 0;
             }
+            StartTurn();
+
         }
 
         /// <summary>

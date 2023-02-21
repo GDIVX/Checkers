@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Mishbetzet;
+using Mishbetzet.Turns;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
@@ -31,6 +32,8 @@ public class Controller : MonoBehaviour
 
             //move tileobject here
             selected.Move(new Point(tile.Position.X, tile.Position.Y));
+            Core.Main.TurnManager.EndTurn();
+
 
             selected = null;
         }
@@ -44,7 +47,14 @@ public class Controller : MonoBehaviour
             return;
         }
 
-        //if(tileObject.Actor == ) turn actor
+        ITurnTracker actor = tileObject.Actor as ITurnTracker;
+        if (actor != Core.Main.TurnManager.CurrentTurn)
+        {
+            print(actor);
+            return;
+        }
+
+
         selected = tileObject;
     }
 }
