@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
 
 
     Core Core => Core.Main;
-    Mishbetzet.Actor blackTeam;
-    Mishbetzet.Actor whiteTeam;
+    Mishbetzet.TurnTrackedActor blackTeam;
+    Mishbetzet.TurnTrackedActor whiteTeam;
 
 
     private void Awake()
