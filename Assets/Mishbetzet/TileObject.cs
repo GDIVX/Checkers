@@ -127,7 +127,7 @@ namespace Mishbetzet
                 return false;
             }
 
-            TileObject? go = Tile.tileObject;
+            TileObject? go = Core.Main.Tilemap.GetTile(currentPoint).tileObject;
 
             //check if tile or game object iblockmovement
             if (newTile is IBlockMovementMarker || go is IBlockMovementMarker)

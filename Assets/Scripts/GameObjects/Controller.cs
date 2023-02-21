@@ -19,27 +19,32 @@ public class Controller : MonoBehaviour
 
         if (selected == null)
         {
-            if(tileObject == null)
-            {
-                return;
-            }
-
-            //if(tileObject.Actor == ) turn actor
-            selected = tileObject;
+            Select(tileObject);
         }
         else
         {
             if (tileObject != null)
             {
+                //unselect if same tileobject is chosen
                 return;
             }
-            
+
             //move tileobject here
+            selected.Move(new Point(tile.Position.X, tile.Position.Y));
 
             selected = null;
         }
 
-        print(selected.ToString());
+    }
 
+    void Select(TileObject tileObject)
+    {
+        if (tileObject == null)
+        {
+            return;
+        }
+
+        //if(tileObject.Actor == ) turn actor
+        selected = tileObject;
     }
 }
