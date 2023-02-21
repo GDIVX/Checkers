@@ -27,6 +27,7 @@ public class Controller : MonoBehaviour
             if (tileObject != null)
             {
                 //unselect if same tileobject is chosen
+                Deselect(tileObject);
                 return;
             }
 
@@ -38,6 +39,15 @@ public class Controller : MonoBehaviour
             selected = null;
         }
 
+    }
+
+    void Deselect(TileObject tileObject)
+    {
+
+        if (selected == tileObject)
+        {
+            selected = null;
+        }
     }
 
     void Select(TileObject tileObject)
