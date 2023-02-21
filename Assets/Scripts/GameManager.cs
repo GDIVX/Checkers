@@ -1,5 +1,7 @@
+using Assets.Scripts.GameObjects;
 using Mishbetzet;
 using Mishbetzet.Turns;
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -89,17 +91,14 @@ public class GameManager : MonoBehaviour
                 {
                     if (j % 2 == 1)
                     {
-                        Tile tile = Core.Tilemap[i, j];
-                        Core.CreateGameObject<WhiteMan>(whiteTeam, tile);
-
+                        CreateMan<WhiteMan>(i, j, whiteTeam, false);
                     }
                 }
                 else
                 {
                     if (j % 2 == 0)
                     {
-                        Tile tile = Core.Tilemap[i, j];
-                        Core.CreateGameObject<WhiteMan>(whiteTeam, tile);
+                        CreateMan<WhiteMan>(i, j, whiteTeam, false);
                     }
                 }
             }
@@ -113,21 +112,27 @@ public class GameManager : MonoBehaviour
                 {
                     if (j % 2 == 1)
                     {
-                        Tile tile = Core.Tilemap[i, j];
-                        Core.CreateGameObject<BlackMan>(blackTeam, tile);
-
+                        CreateMan<BlackMan>(i, j, blackTeam, true);
                     }
                 }
                 else
                 {
                     if (j % 2 == 0)
                     {
-                        Tile tile = Core.Tilemap[i, j];
-                        Core.CreateGameObject<BlackMan>(blackTeam, tile);
+                        CreateMan<BlackMan>(i, j, blackTeam, true);
                     }
                 }
             }
         }
     }
+
+    private void CreateMan<T>(int i, int j, CheckersActor actor, bool isMovingRight) where T : TileObject
+    {
+        Tile tile = Core.Tilemap[i, j];
+        var tileObj = Core.CreateGameObject<T>(actor, tile);
+        Man man = tileObj as Man;
+        man.IsMovingRight = isMovingRight;
+    }
+
 
 }

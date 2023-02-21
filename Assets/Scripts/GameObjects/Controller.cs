@@ -32,7 +32,7 @@ public class Controller : MonoBehaviour
 
             //move tileobject here
             selected.Move(new Point(tile.Position.X, tile.Position.Y));
-            Core.Main.TurnManager.EndTurn();
+            
 
 
             selected = null;

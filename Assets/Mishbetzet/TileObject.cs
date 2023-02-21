@@ -26,7 +26,7 @@ namespace Mishbetzet
 
         public string Name { get => _name; set => _name = value; }
 
-        public event Action OnStep;
+        public event Action OnMove;
 
 
         //should be called if a game object steps on a tile without finishing his move function,
@@ -70,6 +70,7 @@ namespace Mishbetzet
             //check if tile or gameObject on the tile that you want to move to blocks movement
 
             int remainingSteps = RemainingSteps;
+            Point previousPos = Tile.Position;
 
             while (TryStep(position))
             {
@@ -80,6 +81,12 @@ namespace Mishbetzet
 
                 }
             }
+
+            if (!Tile.Position.Equals(previousPos))
+            {
+                OnMove?.Invoke();
+            }
+
         }
 
         /// <summary>
@@ -103,15 +110,15 @@ namespace Mishbetzet
 
 
         /// <summary>
-        /// Tries to step in a direction
+        /// Tries to take one step in a direction
         /// </summary>
-        /// <param name="direction"></param>
+        /// <param name="position"></param>
         /// <returns></returns>
-        public virtual bool TryStep(Point direction)
+        public virtual bool TryStep(Point position)
         {
             Point currentPoint = Tile.Position;
             Point pos = new Point();
-            pos = Tile.Position - direction;
+            pos = Tile.Position - position;
 
             currentPoint = Step(currentPoint, pos);
 
@@ -146,6 +153,7 @@ namespace Mishbetzet
             }
 
             SetTile(newTile);
+
 
             return true;
         }
