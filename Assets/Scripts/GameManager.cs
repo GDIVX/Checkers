@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     CheckersActor blackTeam;
     CheckersActor whiteTeam;
 
+    
 
     private void Awake()
     {
@@ -132,7 +133,22 @@ public class GameManager : MonoBehaviour
         var tileObj = Core.CreateGameObject<T>(actor, tile);
         Man man = tileObj as Man;
         man.IsMovingRight = isMovingRight;
+        man.OnMove += man.CheckCreateKing;
     }
 
+    public void CreateKing<T>(int i, int j, CheckersActor actor) where T : TileObject
+    {
+        Tile tile = Core.Tilemap[i, j];
+        var tileObj = Core.CreateGameObject<T>(actor, tile);
+        King king = tileObj as King;
+    }
 
+    public CheckersActor GetBlackTeam()
+    {
+        return blackTeam;
+    }
+    public CheckersActor GetWhiteTeam()
+    {
+        return whiteTeam;
+    }
 }

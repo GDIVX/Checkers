@@ -57,19 +57,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7914475357368118911, guid: f18cd415726b58545bccc5e9433f8b79, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.6509804
       objectReference: {fileID: 0}
     - target: {fileID: 7914475357368118911, guid: f18cd415726b58545bccc5e9433f8b79, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.6509804
       objectReference: {fileID: 0}
     - target: {fileID: 7914475357368118911, guid: f18cd415726b58545bccc5e9433f8b79, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.85882354
       objectReference: {fileID: 0}
     - target: {fileID: 8440699615698908737, guid: f18cd415726b58545bccc5e9433f8b79, type: 3}
       propertyPath: m_Name
-      value: BlackKing
+      value: BlackKing Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8618139805599769006, guid: f18cd415726b58545bccc5e9433f8b79, type: 3}
       propertyPath: m_Color.b
@@ -81,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8618139805599769006, guid: f18cd415726b58545bccc5e9433f8b79, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.7921569
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f18cd415726b58545bccc5e9433f8b79, type: 3}
