@@ -8,83 +8,66 @@ using Unity.VisualScripting;
 
 namespace Assets.Scripts.GameObjects
 {
-    public class Man : TileObject
+    public class Man : Piece
     {
         bool isMovingRight;
         public bool IsMovingRight { get => isMovingRight; set => isMovingRight = value; }
-
-        public List<Tile> AvailableMoves { get; private set; } = new();
-
-        public void SetAvailableMoves(List<Tile> availableTilesList)
-        {
-            AvailableMoves = availableTilesList;
-        }
-
-        public Man()
-        {
-            OnMove += Core.Main.TurnManager.EndTurn;
-        }
-
-
-        public override void Move(Point position)
-        {
-            //RemainingSteps = 1;
-            base.Move(position);
-        }
-
-
 
         //override trystep to only allow diagonal movement
         public override bool TryStep(Point position)
         {
 
-            //Check if we are trying to step on a black tile
-            //We can check that using that formula (x + y) % 2 = 1
-            //if the result is 1, then the tile is black
-            if ((position.X + position.Y) % 2 == 0) return false;
-
             //Make sure that we are not moving backwards
             if (IsMovingRight && position.X > Tile.Position.X) return false;
             if (!IsMovingRight && position.X < Tile.Position.X) return false;
 
-            // Makes sure position is in available moves list
-            if (!InAvailableMoves(position))
-            {
-                return false;
-            }
 
-            //TODO make sure men can only move diagonally
             return base.TryStep(position);
-
 
         }
 
-        bool InAvailableMoves(Point position)
+        public override List<Tile> CheckAvailableMoves()
         {
-            foreach (var tile in AvailableMoves)
+            List<Tile> availablePositions = new List<Tile>();
+            if (!isMovingRight)
             {
-                if (tile.Position.Equals(position))
+                // check NE/SE
+                Tile? NETile = CheckPointForward(Point.NorthEast);
+
+                //if not null then add to availablePositions
+                if (NETile != null)
                 {
-                    return true;
+                    availablePositions.Add(NETile);
+                }
+
+                Tile? SETile = CheckPointForward(Point.SouthEast);
+
+                if (SETile != null)
+                {
+                    availablePositions.Add(SETile);
                 }
             }
-            return false;
+            else
+            {
+                // check NW/SW
+                Tile? NWTile = CheckPointForward(Point.NorthWest);
+
+                //if not null then add to availablePositions
+                if (NWTile != null)
+                {
+                    availablePositions.Add(NWTile);
+                }
+
+                Tile? SWTile = CheckPointForward(Point.SouthWest);
+
+                if (SWTile != null)
+                {
+                    availablePositions.Add(SWTile);
+                }
+            }
+
+            return availablePositions;
         }
 
     }
 }
-
-/* get current location and destination
- * check if destniation is eliagble ("right" dir, distance) pawn = 2 eat one; king enemyloc + 1
- * 
- * Man
- * check 2 possible move
- * blocked by enemy? is the next one free?
- * 
- * King
- * check 4 possible move directions
- * blocked by enemy? is the next one free?
- * 
- * 
- * 
- */
