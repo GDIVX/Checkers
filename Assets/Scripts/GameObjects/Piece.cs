@@ -71,9 +71,14 @@ namespace Assets.Scripts.GameObjects
         public abstract List<Tile> CheckAvailableMoves();
 
 
-        protected Tile CheckPointForward(Point direction)
+        protected Tile CheckPointForward(Point direction, Tile tileToCheckFrom)
         {
-            Tile? tileInDirection = Core.Main.Tilemap.GetTile(Tile.Position + direction);
+            if(tileToCheckFrom == null)
+            {
+                return null;
+            }
+
+            Tile? tileInDirection = Core.Main.Tilemap.GetTile(tileToCheckFrom.Position + direction);
 
             if (tileInDirection == null)
             {
@@ -108,7 +113,6 @@ namespace Assets.Scripts.GameObjects
             }
 
             return tileInDirectionAgain;
-
         }
     }
 

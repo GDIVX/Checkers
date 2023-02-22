@@ -32,7 +32,7 @@ namespace Assets.Scripts.GameObjects
             if (!isMovingRight)
             {
                 // check NE/SE
-                Tile? NETile = CheckPointForward(Point.NorthEast);
+                Tile? NETile = CheckPointForward(Point.NorthEast, Tile);
 
                 //if not null then add to availablePositions
                 if (NETile != null)
@@ -40,7 +40,7 @@ namespace Assets.Scripts.GameObjects
                     availablePositions.Add(NETile);
                 }
 
-                Tile? SETile = CheckPointForward(Point.SouthEast);
+                Tile? SETile = CheckPointForward(Point.SouthEast, Tile);
 
                 if (SETile != null)
                 {
@@ -50,7 +50,7 @@ namespace Assets.Scripts.GameObjects
             else
             {
                 // check NW/SW
-                Tile? NWTile = CheckPointForward(Point.NorthWest);
+                Tile? NWTile = CheckPointForward(Point.NorthWest, Tile);
 
                 //if not null then add to availablePositions
                 if (NWTile != null)
@@ -58,7 +58,7 @@ namespace Assets.Scripts.GameObjects
                     availablePositions.Add(NWTile);
                 }
 
-                Tile? SWTile = CheckPointForward(Point.SouthWest);
+                Tile? SWTile = CheckPointForward(Point.SouthWest, Tile);
 
                 if (SWTile != null)
                 {
@@ -69,5 +69,23 @@ namespace Assets.Scripts.GameObjects
             return availablePositions;
         }
 
+        public void CheckCreateKing()
+        {
+            if(isMovingRight)
+            {
+                if(Tile.Position.X == 0)
+                {
+                    GameManager.Instance.CreateKing<BlackKing>(Tile.Position.X, Tile.Position.Y, GameManager.Instance.GetBlackTeam());
+                }
+            }
+            else
+            {
+                if(Tile.Position.X == 7)
+                {
+                    GameManager.Instance.CreateKing<WhiteKing>(Tile.Position.X, Tile.Position.Y, GameManager.Instance.GetWhiteTeam());
+                }
+            }
+        }
+        
     }
 }
