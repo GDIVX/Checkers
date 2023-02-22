@@ -12,6 +12,14 @@ namespace Assets.Scripts.GameObjects
     {
         bool isMovingRight;
         public bool IsMovingRight { get => isMovingRight; set => isMovingRight = value; }
+
+        public List<Tile> AvailableMoves { get; private set; } = new();
+
+        public void SetAvailableMoves(List<Tile> availableTilesList)
+        {
+            AvailableMoves = availableTilesList;
+        }
+
         public Man()
         {
             OnMove += Core.Main.TurnManager.EndTurn;
@@ -20,9 +28,7 @@ namespace Assets.Scripts.GameObjects
 
         public override void Move(Point position)
         {
-
-
-            RemainingSteps = 1;
+            //RemainingSteps = 1;
             base.Move(position);
         }
 
@@ -41,14 +47,11 @@ namespace Assets.Scripts.GameObjects
             if (IsMovingRight && position.X > Tile.Position.X) return false;
             if (!IsMovingRight && position.X < Tile.Position.X) return false;
 
-            // Makes sure these are the next tiles
-            //if(MathF.Abs(position.X-Tile.Position.X) > 1) return false;
-
-            //Eating Try
-            
-
-
-            
+            // Makes sure position is in available moves list
+            if (!InAvailableMoves(position))
+            {
+                return false;
+            }
 
             //TODO make sure men can only move diagonally
             return base.TryStep(position);
@@ -56,61 +59,16 @@ namespace Assets.Scripts.GameObjects
 
         }
 
-        List<Tile> AvailableMoves(bool isMovingRight, Point position)
+        bool InAvailableMoves(Point position)
         {
-            List<Tile> availablePositions = new List<Tile>();
-            if (isMovingRight)
+            foreach (var tile in AvailableMoves)
             {
-                // check NE/SE
-                Tile? NETile = CheckDiagonal(Point.NorthEast);
-
-                //if not null then add to availablePositions
-                
-                
-
-
+                if (tile.Position.Equals(position))
+                {
+                    return true;
+                }
             }
-        }
-
-        Tile CheckDiagonal(Point direction)
-        {
-            // check NE/SE
-            Tile? tileInDirection = Core.Main.Tilemap.GetTile(Tile.Position + direction);
-
-            if(tileInDirection == null)
-            {
-                return null;
-            }
-
-            TileObject? tileObjectInDirection = tileInDirection.tileObject;
-
-            if(tileObjectInDirection == null)
-            {
-                return tileInDirection;
-            }
-            //if ally tileobject break
-            if(tileObjectInDirection.Actor == Core.Main.TurnManager.CurrentTurn)
-            {
-                return null;
-            }
-
-            //if enemyObject check another NE/SE
-            Tile? tileInDirectionAgain = Core.Main.Tilemap.GetTile(tileInDirection.Position + direction);
-
-            if(tileInDirectionAgain == null)
-            {
-                return null;
-            }
-
-            TileObject? tileObjectInDirectionAgain = tileInDirectionAgain.tileObject;
-
-            if(tileObjectInDirectionAgain != null)
-            {
-                return null;
-            }
-
-            return tileInDirectionAgain;
-
+            return false;
         }
 
     }
