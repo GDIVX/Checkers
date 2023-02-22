@@ -16,7 +16,7 @@ namespace Mishbetzet
         /// The distance the game object is allowed to move per turn. 
         /// </summary>
         public int MovementRange { get; set; }
-        public int RemainingSteps { get; set; }
+        public int RemainingSteps { get; set; } = 10;
 
 
         public Tile Tile { get => _currentTile; private set => _currentTile = value; }
@@ -66,8 +66,6 @@ namespace Mishbetzet
             Tile? tile = tilemap[position.X, position.Y];
 
             if (tile == null) return;
-
-            //check if tile or gameObject on the tile that you want to move to blocks movement
 
             int remainingSteps = RemainingSteps;
             Point previousPos = Tile.Position;
@@ -120,21 +118,22 @@ namespace Mishbetzet
             Point pos = new Point();
             pos = Tile.Position - position;
 
-            currentPoint = Step(currentPoint, pos);
+            Point newPoint = Step(currentPoint, pos);
 
-            if (currentPoint.Equals(Tile.Position))
+            //is new point the same as current point
+            if (newPoint.Equals(Tile.Position))
             {
                 return false;
             }
 
-            Tile? newTile = Core.Main.Tilemap[currentPoint.X, currentPoint.Y];
+            Tile? newTile = Core.Main.Tilemap[newPoint.X, newPoint.Y];
 
             if (newTile == null)
             {
                 return false;
             }
 
-            TileObject? go = Core.Main.Tilemap.GetTile(currentPoint).tileObject;
+            TileObject? go = Core.Main.Tilemap.GetTile(newPoint).tileObject;
 
             //check if tile or game object iblockmovement
             if (newTile is IBlockMovementMarker || go is IBlockMovementMarker)
@@ -142,18 +141,7 @@ namespace Mishbetzet
                 return false;
             }
 
-            //check if tile has game object
-            if (go != null)
-            {
-                //check if game object is from the same actor
-                if (go.Actor == this.Actor)
-                {
-                    return false;
-                }
-            }
-
             SetTile(newTile);
-
 
             return true;
         }

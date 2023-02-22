@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 
 namespace Assets.Scripts.GameObjects
 {
@@ -11,6 +12,14 @@ namespace Assets.Scripts.GameObjects
     {
         bool isMovingRight;
         public bool IsMovingRight { get => isMovingRight; set => isMovingRight = value; }
+
+        public List<Tile> AvailableMoves { get; private set; } = new();
+
+        public void SetAvailableMoves(List<Tile> availableTilesList)
+        {
+            AvailableMoves = availableTilesList;
+        }
+
         public Man()
         {
             OnMove += Core.Main.TurnManager.EndTurn;
@@ -19,9 +28,7 @@ namespace Assets.Scripts.GameObjects
 
         public override void Move(Point position)
         {
-
-
-            RemainingSteps = 1;
+            //RemainingSteps = 1;
             base.Move(position);
         }
 
@@ -39,31 +46,29 @@ namespace Assets.Scripts.GameObjects
             //Make sure that we are not moving backwards
             if (IsMovingRight && position.X > Tile.Position.X) return false;
             if (!IsMovingRight && position.X < Tile.Position.X) return false;
-            // Makes sure these are the next tiles
-            //if(MathF.Abs(position.X-Tile.Position.X) > 1) return false;
 
-            //Eating Try
-            if (position.Equals(Tile.Position + Point.NorthWest + Point.NorthWest) && Core.Main.Tilemap.GetTile(Tile.Position + Point.NorthWest + Point.NorthWest).tileObject == null)
+            // Makes sure position is in available moves list
+            if (!InAvailableMoves(position))
             {
-                Point enemyPos = Tile.Position + Point.NorthWest;
-                TileObject? enemyObject = Core.Main.Tilemap.GetTile(enemyPos).tileObject;
-                if (enemyObject != null && enemyObject.Actor != this.Actor)
-                {
-                    UnityEngine.Debug.Log("fuck");
-                    UnityEngine.Debug.Log(Core.Main.Tilemap.GetTile(enemyPos).tileObject);
-                    TileObject? nullobject = null;
-                    Core.Main.Tilemap.GetTile(enemyPos).tileObject = nullobject;
-                    RemainingSteps = 2;
-                }
+                return false;
             }
-
-
-            
 
             //TODO make sure men can only move diagonally
             return base.TryStep(position);
 
 
+        }
+
+        bool InAvailableMoves(Point position)
+        {
+            foreach (var tile in AvailableMoves)
+            {
+                if (tile.Position.Equals(position))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }
