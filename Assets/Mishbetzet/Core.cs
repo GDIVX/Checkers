@@ -157,7 +157,6 @@ namespace Mishbetzet
 
             renderer.Render(Tilemap);
 
-            //TODO - create a list of all game objects and call update on them
         }
 
         public override void Stop()
