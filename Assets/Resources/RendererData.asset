@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a898d21774f46b24a9860a8b09bcd4ea, type: 3}
   m_Name: RendererData
   m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0}
   definitions:
   - _name: BlackTile
     _prefab: {fileID: 2511952277480066899, guid: ad78fa9d7b6007242a4b357e1bab411f, type: 3}
@@ -25,3 +26,5 @@ MonoBehaviour:
     _prefab: {fileID: 8440699615698908737, guid: f18cd415726b58545bccc5e9433f8b79, type: 3}
   - _name: BlackKing
     _prefab: {fileID: 1662164775935495489, guid: ed515a7d195625d4aa99fb1f14bcaebc, type: 3}
+  - _name: Highlight
+    _prefab: {fileID: 2511952277480066899, guid: f6f24c4fe7aca0140bf84c833aff9602, type: 3}

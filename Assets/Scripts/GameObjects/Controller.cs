@@ -12,7 +12,6 @@ public class Controller : MonoBehaviour
 
     Tile tile;
 
-    public event Action<List<Tile>> OnAvailableMovesCalculated;
 
     private void OnMouseDown()
     {
@@ -37,7 +36,7 @@ public class Controller : MonoBehaviour
 
             //move tileobject here
             selected.Move(new Point(tile.Position.X, tile.Position.Y));
-            
+
 
 
             selected = null;
@@ -51,6 +50,9 @@ public class Controller : MonoBehaviour
         if (selected == tileObject)
         {
             selected = null;
+
+            //Hide the highlights
+            GameManager.Instance.UIManager.HideHighlights();
         }
     }
 
@@ -68,12 +70,16 @@ public class Controller : MonoBehaviour
             return;
         }
 
-        selected = tileObject; 
+        selected = tileObject;
 
         Piece piece = tileObject as Piece;
-        piece.SetAvailableMoves(piece.CheckAvailableMoves());
-        
-        foreach(var t in piece.AvailableMoves)
+        var avilabeMoves = piece.CheckAvailableMoves();
+        piece.SetAvailableMoves(avilabeMoves);
+
+        //Display the moves to the player
+        GameManager.Instance.UIManager.ShowHighlights(avilabeMoves);
+
+        foreach (var t in piece.AvailableMoves)
         {
             Debug.Log(t.ToString());
         }

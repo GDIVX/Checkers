@@ -12,6 +12,13 @@ public class UnityTilemapRenderer : IRenderer
     //create grid of tileObjects[,]
     UnityEngine.GameObject[,] tileObjectGrid = new UnityEngine.GameObject[Core.Main.Tilemap.Width, Core.Main.Tilemap.Height];
 
+    public UnityTilemapRenderer()
+    {
+        Core.Main.OnTilemapUpdated += () => RenderedTiles = false;
+    }
+
+    bool RenderedTiles { get => renderedTiles; set => renderedTiles = value; }
+
     public void Render(Tilemap tilemap)
     {
         //Load data
@@ -23,13 +30,13 @@ public class UnityTilemapRenderer : IRenderer
         {
             for (int y = 0; y < tilemap.Width; y++)
             {
-                if (!renderedTiles) RenderTile(x, y, tilemap);
+                if (!RenderedTiles) RenderTile(x, y, tilemap);
 
                 //Render tile object
                 RenderTileObject(x, y, tilemap);
             }
         }
-        renderedTiles = true;
+        RenderedTiles = true;
     }
 
     private void RenderTileObject(int x, int y, Tilemap tilemap)
@@ -52,7 +59,7 @@ public class UnityTilemapRenderer : IRenderer
 
         //if tileobject already exists on grid at this location
         Vector3 position = new(tileObject.Tile.Position.X, tileObject.Tile.Position.Y, 0);
-        if(tileObjectGrid[(int)position.x, (int)position.y] != null)
+        if (tileObjectGrid[(int)position.x, (int)position.y] != null)
         {
             return;
         }

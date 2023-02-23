@@ -9,12 +9,15 @@ public class GameManager : MonoBehaviour
     //Singelton
     public static GameManager Instance { get; private set; }
 
-
+    GUIManager uIManager = new();
     Core Core => Core.Main;
-    CheckersActor blackTeam;
-    CheckersActor whiteTeam;
 
-    
+    public GUIManager UIManager => uIManager;
+
+    CheckersActor whiteTeam;
+    CheckersActor blackTeam;
+
+
 
     private void Awake()
     {
@@ -46,8 +49,8 @@ public class GameManager : MonoBehaviour
 
     void GeneratePlayers()
     {
-        blackTeam = new();
         whiteTeam = new();
+        blackTeam = new();
     }
 
     private void GenerateMap()

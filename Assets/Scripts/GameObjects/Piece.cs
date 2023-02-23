@@ -24,7 +24,8 @@ namespace Assets.Scripts.GameObjects
 
         public override void Move(Point position)
         {
-            //RemainingSteps = 1;
+            //Hide highlits
+            GameManager.Instance.UIManager.HideHighlights();
             base.Move(position);
         }
 
@@ -73,7 +74,7 @@ namespace Assets.Scripts.GameObjects
 
         protected Tile CheckPointForward(Point direction, Tile tileToCheckFrom)
         {
-            if(tileToCheckFrom == null)
+            if (tileToCheckFrom == null)
             {
                 return null;
             }

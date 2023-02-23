@@ -14,6 +14,8 @@ namespace Mishbetzet
     {
         static Core _instance;
 
+        public event Action OnTilemapUpdated;
+
         /// <summary>
         /// Singelton for the core engine
         /// </summary>
@@ -82,6 +84,8 @@ namespace Mishbetzet
             }
             Tilemap.AddTile(tile);
 
+            OnTilemapUpdated?.Invoke();
+
             return tile;
         }
 
@@ -110,6 +114,9 @@ namespace Mishbetzet
             gameObject.Name = typeof(T).Name;
             gameObject.SetTile(tile);
             owner.AddGameObject(gameObject);
+
+            OnTilemapUpdated?.Invoke();
+
 
             return gameObject;
 
